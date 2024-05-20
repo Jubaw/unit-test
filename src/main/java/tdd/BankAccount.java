@@ -27,10 +27,11 @@ public class BankAccount {
         return this.accountNumber;
     }
 
-    public Double getBalance(){
+    public Double getBalance() {
         return this.balance;
     }
-    public Double getDailyWithdrawLimit(){
+
+    public Double getDailyWithdrawLimit() {
         return this.dailyWithdrawLimit;
     }
 
@@ -53,5 +54,38 @@ public class BankAccount {
 
     public void setHistory(List<String> history) {
         this.history = history;
+    }
+
+    public double getDailyWithdrawAmount() {
+        return dailyWithdrawAmount;
+    }
+
+    public List<String> getHistory() {
+        return history;
+    }
+//Methods with function
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            this.history.add("Deposit : " + amount);
+        } else {
+            throw new RuntimeException("Amount should be positive");
+        }
+
+    }
+
+
+
+    public boolean withdraw(double amount){
+
+        if (amount>0 && amount<=this.balance && (this.dailyWithdrawAmount+amount)<=this.dailyWithdrawLimit){
+            this.balance-=amount;
+            this.dailyWithdrawAmount+=amount;
+            this.history.add("Withdraw : "+amount);
+            return true;
+        }
+
+        return false;
     }
 }
